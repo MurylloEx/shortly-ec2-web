@@ -13,8 +13,8 @@ phases:
   post_build:
     commands:
       - echo "Uploading artifacts..."
-      - aws s3 sync dist/ s3://$S3_BUCKET_NAME
+      - aws s3 sync dist/ s3://s3-my-app
 artifacts:
   files:
     - 'dist/*'
-  name: $APP_NAME
+  name: s3-my-app
