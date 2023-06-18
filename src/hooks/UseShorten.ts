@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { ApiClient, Exception, ShortenUrl } from 'src/hooks/network';
+import { ApiClient, ApiResponse, Exception, ShortenUrl } from 'src/hooks/network';
 
 export type UseShorten = {
   isSuccess: boolean;
@@ -27,12 +27,12 @@ export function useShorten(): UseShorten {
     const urlBuilder = new URLSearchParams('?');
     urlBuilder.append('url', realUrl);
 
-    ApiClient.post<ShortenUrl>(`/v1/shorten?${urlBuilder.toString()}`)
+    ApiClient.post<ApiResponse<ShortenUrl>>(`/v1/shorten?${urlBuilder.toString()}`)
       .then((value) => {
         setIsSuccess(true);
         setIsLoading(false);
         setIsDone(true);
-        setResult(value.data);
+        setResult(value.data.response);
         setException(undefined);
       })
       .catch((value) => {

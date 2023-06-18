@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { ApiClient, Exception, ShortenUrl } from 'src/hooks/network';
+import { ApiClient, ApiResponse, Exception, ShortenUrl } from 'src/hooks/network';
 
 export type UseViewShortenUrl = {
   isSuccess: boolean;
@@ -23,12 +23,12 @@ export function useViewShortenUrl(): UseViewShortenUrl {
     setIsDone(false);
     setResult(undefined);
 
-    ApiClient.get<ShortenUrl>(`/v1/code/${encodeURIComponent(code)}/info`)
+    ApiClient.get<ApiResponse<ShortenUrl>>(`/v1/code/${encodeURIComponent(code)}/info`)
       .then((value) => {
         setIsSuccess(true);
         setIsLoading(false);
         setIsDone(true);
-        setResult(value.data);
+        setResult(value.data.response);
         setException(undefined);
       })
       .catch((value) => {

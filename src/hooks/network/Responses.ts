@@ -1,3 +1,12 @@
+export type ApiResponse<T> = {
+  timestamp: Date;
+  path: string;
+  error: boolean;
+  status: number;
+  code: string;
+  response: T;
+}
+
 export type ShortenUrl = {
   shortId: string;
   shortCode: string;
